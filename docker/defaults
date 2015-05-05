@@ -1,0 +1,2 @@
+DOCKER_OPTS=""
+DOCKER_OPTS="${DOCKER_OPTS} --bridge crb0 --iptables=false --ip-masq=false"
