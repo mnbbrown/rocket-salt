@@ -1,3 +1,7 @@
+gitfs_remotes:
+  - https://github.com/saltstack-formulas/zookeeper-formula
+
+
 base:
   '*':
     - base
