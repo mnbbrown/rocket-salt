@@ -1,10 +1,3 @@
-pkg-core:
-  pkg.installed:
-    - names:
-      - curl
-      - apt-transport-https
-      - python-apt
-
 monit:
   pkg:
     - installed

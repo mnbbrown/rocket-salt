@@ -1,17 +1,13 @@
-gitfs_remotes:
-  - https://github.com/saltstack-formulas/zookeeper-formula
-
-
 base:
   '*':
     - base
     - debian-auto-upgrades
     - monit
     - logrotate
-    - collectd
     - docker
+    - collectd
 
-  'roles:zookeeper'
+  'roles:zookeeper':
     - match: grain
     - zookeeper
 
