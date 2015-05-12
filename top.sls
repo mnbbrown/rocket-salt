@@ -6,6 +6,9 @@ base:
     - logrotate
     - docker
     - collectd
+    - collectd.disk
+    - collectd.syslog
+    - collectd.interface
 
   'roles:zookeeper':
     - match: grain
