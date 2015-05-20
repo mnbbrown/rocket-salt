@@ -13,6 +13,7 @@ base:
   'roles:zookeeper':
     - match: grain
     - zookeeper
+    - zookeeper.server
 
   'roles:mesos-master':
     - match: grain

@@ -1,34 +1,27 @@
 {%- from 'zookeeper/settings.sls' import zk with context %}
 
-zookeeper:
-  group.present:
-    - gid: {{ zk.uid }}
-  user.present:
-    - uid: {{ zk.uid }}
-    - gid: {{ zk.uid }}
+include:
+    - docker
 
-zk-directories:
-  file.directory:
-    - user: zookeeper
-    - group: zookeeper
-    - mode: 755
-    - makedirs: True
-    - names:
-      - /var/run/zookeeper
-      - /var/lib/zookeeper
-      - /var/log/zookeeper
+zookeeper-exhibitor-image:
+  docker.pulled:
+    - name: mbabineau/zookeeper-exhibitor:latest
 
-install-zookeeper-dist:
-  cmd.run:
-    - name: curl -L '{{ zk.source_url }}' | tar xz --no-same-owner
-    - cwd: {{ zk.prefix }}
-    - unless: test -d {{ zk.real_home }}/lib
-    - user: root
-  alternatives.install:
-    - name: zookeeper-home-link
-    - link: {{ zk.alt_home }}
-    - path: {{ zk.real_home }}
-    - priority: 30
-    - require:
-      - cmd: install-zookeeper-dist
+zookeeper-exhibitor-container:
+    docker.installed:
+        - image: mbabineau/zookeeper-exhibitor:latest
+        - watch:
+            - docker: zookeeper-exhibitor-image
 
+zookeeper-exhibitor:
+    docker.running:
+        - container: zookeeper-exhibitor-container
+        - environment:
+            - S3_BUCKET: 
+            - S3_PREFIX:
+            - AWS_ACCESS_KEY_ID:
+            - AWS_SECRET_ACCESS_KEY:
+            - 
+        - watch:
+            - docker: zookeeper-exhibitor-container
+        
